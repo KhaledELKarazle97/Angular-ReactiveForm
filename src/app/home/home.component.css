@@ -1,0 +1,70 @@
+#message {
+  color: red;
+}
+
+.container {
+  margin-top: 30px;
+}
+
+input,
+select {
+  border-radius: 0px;
+}
+
+
+
+
+.form-inline label {
+  margin-right: 20px;
+}
+
+.form-inline{
+  margin-top: -10px;
+
+}
+@media only screen and (min-width: 1224px) {
+  #dob {
+    width: 426px !important;
+  }
+
+  .btn {
+    width: auto !important
+  }
+
+
+}
+
+@media only screen and (min-width: 1824px) {
+  #dob {
+    width: 426px !important;
+  }
+
+  .btn {
+    width: auto !important
+  }
+
+
+}
+
+#dob {
+  width: 100%;
+}
+
+
+
+.btn {
+  width: 100%;
+  margin-top:10px;
+  border-radius: 0px;
+}
+
+.errMsg{
+  color:lightcoral;
+  margin-bottom:15px;
+}
+
+.errMsgDOB{
+  color:lightcoral;
+  margin-bottom:15px;
+  margin-top:-30px;
+}

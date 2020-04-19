@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiger Lab | Registeration Form</title>
+</head>
+
+<body>
+    <div class="container">
+        <p id="message">Fields marked with a * are required</p>
+        <form [formGroup]="regForm" (ngSubmit)="register()">
+            <div class="row">
+                <div class="col-md-3">
+                    <select name="title" formControlName="title" id="title" class="form-control">
+                        <option value="" disabled>Your Title*</option>
+                        <option *ngFor="let t of titles" [ngValue]="t.val">
+                            {{ t.titleName }}
+                        </option>
+                    </select>
+                    <div class="errMsg" *ngIf="title.errors?.required && title.touched">
+                        Please select a title
+                    </div>
+                </div>
+                <br>
+                <br>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="fname" formControlName="firstName" id="fname" class="form-control" placeholder="Your First Name*">
+
+                    <div class="errMsg" *ngIf="firstName.errors?.required && firstName.touched">
+                        First Name is required.
+                    </div>
+                    <div class="errMsg" *ngIf="firstName.errors?.pattern && firstName.touched">
+                        Your first name may contain only letters.
+                    </div>
+
+                </div>
+                <br>
+                <br>
+                <div class="col-md-6">
+                    <input type="text" name="lname" formControlName="lastName" id="lname" class="form-control" placeholder="Your Last Name / Surname*">
+                    <div class="errMsg" *ngIf="lastName.errors?.required && lastName.touched">
+                        Last Name is required.
+                    </div>
+                    <div class="errMsg" *ngIf="lastName.errors?.pattern && lastName.touched">
+                        Your last name may contain only letters.
+                    </div>
+                </div>
+                <br>
+                <br>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" autocomplete="off" name="email" formControlName="email" id="email" class="form-control" placeholder="Email*">
+                    <div class="errMsg" *ngIf="email.errors?.required && email.touched">
+                        Please fill in your Email address
+                    </div>
+                    <div class="errMsg" *ngIf="email.errors?.pattern && email.touched">
+                        This doesn't seem like a valid email address
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="col-md-6">
+                    <input type="text" autocomplete="off" name="conEmail" formControlName="conEmail" id="conEmail" class="form-control" placeholder="Confirm Email*">
+                    <div *ngIf="regForm.errors?.NotSameEmail && (regForm.touched || regForm.dirty)" class="errMsg">
+                        Please make sure both emails match
+                    </div>
+                    <div *ngIf="email.errors?.required && email.touched" class="errMsg">
+                        Please re-enter your email
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group form-inline">
+                        <p>Date of Birth*: </p>
+                        <p>
+                            <mat-form-field id="dob">
+                                <input matInput formControlName="dateOfBirth" [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </p>
+                    </div>
+                    <div class="errMsgDOB" *ngIf="dateOfBirth.errors?.required && dateOfBirth.touched">
+                        Please enter your date of birth
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <input [(ngModel)]="formatedPN" type="text" name="pNumber" id="pNumber" maxlength="11" (blur)="formatPhone(this.phoneNumber.value)" formControlName="phoneNumber" class="form-control" placeholder="Your Phone Number*">
+                    <div class="errMsg" *ngIf="phoneNumber.errors?.required && phoneNumber.touched">
+                        Please enter your phone number
+                    </div>
+                    <div class="errMsg" *ngIf="phoneNumber.errors?.minlength && phoneNumber.touched">
+                        Invalid phone number
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input autocomplete="off" type="password" id="password" minlength="8" formControlName="password" class="form-control" placeholder="Password*">
+                    <div class="errMsg" *ngIf="password.errors?.required && password.touched">
+                        Please enter a password
+                    </div>
+                    <div class="errMsg" *ngIf="password.errors?.minlength && password.touched">
+                        Your password must be at least 8 character
+                    </div>
+                    <div class="errMsg" *ngIf="password.errors?.pattern && password.touched">
+                        Password can only be alphanumeric
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            <button type="submit" class="btn btn-dark" [disabled]="!regForm.valid">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
