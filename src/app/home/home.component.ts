@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {NotSameEmail} from '../shared/customValidator.validator'; // my custom validator
+import {FormGroup, FormControl, Validators } from '@angular/forms';
+import {NotSameEmail} from '../validators/EmailConfirmation.validator'; // my custom validator
+import {RegistrationService} from '../services/registration.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
   //declare variables
   regForm: FormGroup;
   titles = [];
-  formatedPN;
-  constructor() { }
+  userID;
+  _router: any;
+  constructor(private datasender: RegistrationService, private router: Router) {}
 
   ngOnInit() {
     //declare values for the title dropdown
@@ -21,7 +25,6 @@ export class HomeComponent implements OnInit {
       { titleName: 'Prof', val: '3' },
     ];
 
-    //init the reactive form
     this.regForm = new FormGroup({
       title: new FormControl('',Validators.required),
       firstName: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z ]*$')]),
@@ -29,11 +32,12 @@ export class HomeComponent implements OnInit {
       email: new FormControl('',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
       conEmail: new FormControl('',[Validators.required]),
       dateOfBirth: new FormControl('',[Validators.required]),
-      phoneNumber: new FormControl('',[Validators.required,Validators.minLength(11)]),
+      phoneNumber: new FormControl('',[Validators.required,Validators.minLength(13),Validators.pattern("([0-9]{3})+-([0-9]{5})+-([0-9]{3})")]),
       password: new FormControl('',[Validators.required,Validators.minLength(8),Validators.pattern("^[a-zA-Z0-9]*$")]),
     }, { validators: NotSameEmail });
 
   }
+
   //get the current values of each field in the form
   get title() { return this.regForm.get('title') }
   get firstName() { return this.regForm.get('firstName') }
@@ -44,15 +48,14 @@ export class HomeComponent implements OnInit {
   get phoneNumber() { return this.regForm.get('phoneNumber') }
   get password() { return this.regForm.get('password') }
 
-  //format phone number function
-  formatPhone(f: any){
-      f = f.slice(0,3)+"-"+f.slice(3,8)+"-"+f.slice(8,11);
-      this.formatedPN = f;
-      console.log(f);
-    }
 
-  register() {
-
+  register() {  
+    //custom service to register
+   this.datasender.registerUser(this.regForm.value['email']).subscribe((res)=>{
+      this.userID = res['id'];
+      document.getElementById('modalBtn').click();
+    });
+    sessionStorage.setItem('dob',this.dateOfBirth.value);
   }
 
 }
