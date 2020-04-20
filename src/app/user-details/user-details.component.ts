@@ -27,8 +27,6 @@ export class UserDetailsComponent implements OnInit {
       }else if(params['title'] == 3){
         this.userTitle = 'Prof';
       }
-
-
       this.userFName = params['firstName'];
       this.userLName = params['lastName'];
       this.userEmail = params['email'];

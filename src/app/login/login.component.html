@@ -16,12 +16,11 @@
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <h4>Login to your tigerlab account</h4><hr>
       <input type="text" id="email"  formControlName="email" name="email" placeholder="Email Address" autocomplete="off" autofocus>
-      <input type="text" id="password" formControlName="password" name="password" placeholder="password" autocomplete="off">
+      <input type="password" id="password" formControlName="password" name="password" placeholder="password" autocomplete="off">
       <input type="submit" class="btn btn-dark" [disabled]="!loginForm.valid" value="Log In">
       <a href="/">&lt; Go Back</a>
     </form>
 
-    <button data-toggle="modal" data-target="#loginmodal" id="loginmodalBtn" hidden></button>
     <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodallabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">

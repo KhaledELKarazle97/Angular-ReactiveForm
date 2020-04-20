@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tigerlab | Registration Form</title>
 </head>
-
 <body>
     <div class="container">
         <p id="message">Fields marked with a * are required</p>
@@ -25,7 +24,6 @@
                 </div>
                 <br>
                 <br>
-
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -50,7 +48,6 @@
                 </div>
                 <br>
                 <br>
-
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -72,11 +69,13 @@
                     <div *ngIf="email.errors?.required && email.touched" class="errMsg">
                         Please re-enter your email
                     </div>
+                    <div class="errMsg" *ngIf="conEmail.errors?.pattern && conEmail.touched">
+                        This doesn't seem like a valid email address
+                    </div>
                 </div>
                 <br>
                 <br>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group form-inline">
@@ -93,7 +92,6 @@
                         Please enter your date of birth
                     </div>
                 </div>
-
                 <div class="col-md-6">
                     <input type="text" name="pNumber" id="pNumber" maxlength="13" formControlName="phoneNumber" class="form-control" placeholder="Your Phone Number*">
                     <div class="errMsg" *ngIf="phoneNumber.errors?.required && phoneNumber.touched">
@@ -102,13 +100,10 @@
                     <div class="errMsg" *ngIf="phoneNumber.errors?.minlength && phoneNumber.touched || phoneNumber.errors?.pattern">
                         Invalid phone number, please use this format (xxx-xxxxx-xxx)
                     </div>
-
                 </div>
-
                 <br>
                 <br>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <input autocomplete="off" type="password" id="password" minlength="8" formControlName="password" class="form-control" placeholder="Password*">
@@ -127,30 +122,49 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-dark" [disabled]="!regForm.valid">Submit</button><br><br>
+                    <button type="submit" class="btn btn-dark" [disabled]='!regForm.valid'>Submit</button>
+                    <br>
+                    <br>
                 </div>
-              
             </div>
         </form>
     </div>
-    <button data-toggle="modal" data-target="#modal" id="modalBtn" hidden></button>
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="modalLabel">Registration Successful!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            <p>You have successfully registered, here is your ID: <b>{{userID}}</b></p>
-            </div>
-            <div class="modal-footer">
-            <a [routerLink]="['/login', userID,regForm.value['email']]" class="btn btn-secondary" data-dismiss="modal">Login</a>
-            <a [routerLink]="['/userdetails', userID,regForm.value['title'],regForm.value['firstName'],regForm.value['lastName'],regForm.value['email'],regForm.value['phoneNumber']]" class="btn btn-secondary" data-dismiss="modal">View my information</a>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Registration Successful!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You have successfully registered, here is your ID: <b>{{userID}}</b></p>
+                </div>
+                <div class="modal-footer">
+                    <a [routerLink]="['/login', userID,regForm.value['email']]" class="btn btn-secondary" data-dismiss="modal">Login</a>
+                    <a [routerLink]="['/userdetails', userID,regForm.value['title'],regForm.value['firstName'],regForm.value['lastName'],regForm.value['email'],regForm.value['phoneNumber']]" class="btn btn-secondary" data-dismiss="modal">View my information</a>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="modalEmailExist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Could not register your email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>{{emailExistErr}}</h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

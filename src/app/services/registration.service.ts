@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+//this service is used to register users
 export class RegistrationService {
   constructor() { }
   public registerUser(email:String): Observable<any>{

@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+//login service to call the api to check whether use exists
 export class LoginService {
   constructor() { }
   public login(email:String,password:String): Observable<any>{
